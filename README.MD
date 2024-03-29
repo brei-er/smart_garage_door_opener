@@ -1,6 +1,6 @@
 # Smart garage door opener
 
-Upgrade your conventional garage door into a smart one! This project seamlessly integrates your garage door opener with an external switch contact (e.g., Novoport) into your smart home environment using MQTT, specifically tailored for use with Home Assistant.
+Upgrade your conventional garage door to a smart one! This project integrates your garage door opener equipped with an external switch contact (e.g. Novoport) seamlessly into your smart home environment using MQTT, specifically designed for use with Home Assistant.
 
 ## Hardware
 
@@ -16,9 +16,7 @@ To implement this project, you'll need the following hardware components:
 
 ## Explaination
 
-To open the garage door, only two contacts need to be bridged. The project is based on an ESP8266 microcontroller, which is integrated into the local network via Wifi. Basically, only two contacts need to be bridged to open the garage door. This can of course be realised very easily using a relay. In terms of smart control, the position of the garage door is also monitored with a distance sensor (TOF400C-VL53L1X). Data is exchanged with home assistant via MQTT. An MQTT broker must be installed on the server computer for this.
-
-Of course, ESPHome would be an alternative platform to realise this project. Later, however, limit switch positions should be queried and it should be possible to specify the position as a setpoint.
+To open the garage door, you usually only need to connect two contacts on its control panel. This can be easily achieved using a relay. This project is based on an ESP8266 microcontroller, which is integrated into the local network via Wifi. In terms of smart control, the position of the garage door is monitored with a distance sensor (TOF400C-VL53L1X). Data is exchanged with Home Assistant via a running MQTT broker. ESPHome could also be used as an alternative platform for this project. However, the current integration offers more flexibility for further improvements.
 
 ## Setting Up
 
@@ -48,7 +46,7 @@ mqtt:
 ```
 
 
-Then you can create for example a[`Horizontal stack Card`](https://www.home-assistant.io/dashboards/horizontal-stack) on the home screen.
+Then you can create for example a [`Horizontal stack Card`](https://www.home-assistant.io/dashboards/horizontal-stack) on the home screen.
 
 ```
 type: horizontal-stack
