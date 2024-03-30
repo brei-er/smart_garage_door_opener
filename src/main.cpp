@@ -12,11 +12,11 @@ into your smart home environment using MQTT, specifically tailored for use with 
 #include <Wire.h>
 
 // Variables
-unsigned long previous_millis_sensor = 0;
 unsigned long previous_millis_publish = 0;
-int distance_mm = 0;
+unsigned long previous_millis_sensor = 0;
 unsigned long submit_interval = 1000;
 unsigned long state_delay = 0;
+int distance_mm = 0;
 
 // Relay pin
 const int relay = 13; // D7
@@ -31,17 +31,17 @@ const long interval_publish_moving = 1000;         // ms
 const long delay_time = 10000;         // ms Additional delay for state changes
 
 // Distance limits for sensor reaging intervals
-float distance_mm_open_positions = 240;    // mm
-float distance_mm_closed_positions = 2540; // mm
+const long distance_mm_open_positions = 240;    // mm
+const long distance_mm_closed_positions = 2540; // mm
 
 // Garage MQTT Topic
-const char *MQTT_PUB_DISTANCE_MM = "garage_door/VL53L1X/distance_mm";
+const char MQTT_PUB_DISTANCE_MM[] = "garage_door/VL53L1X/distance_mm";
 
 // MQTT subsciption topics
 const char MQTT_SUB_RELAY[] = "garage_door/relay";
 
 // MQTT message buffer
-const char *MQTT_SUB_RELAY_COMMAND = "pulse";
+const char MQTT_SUB_RELAY_COMMAND[] = "pulse";
 
 // U8G2_SSD1306_128X64_NONAME_F_SW_I2C u8g2(U8G2_R0, /* clock=*/ SCL, /* data=*/ SDA, /* reset=*/ U8X8_PIN_NONE);   // All Boards without Reset of the Display
 #define SCL 12 // D5=SLC=GPIO12
@@ -167,7 +167,6 @@ void loop()
     if (distance_mm < distance_mm_open_positions || distance_mm > distance_mm_closed_positions)
     {
       submit_interval = interval_publish_end_positions; // Longer interval for end positions
-      state_delay = 0;
     }
     else
     {
