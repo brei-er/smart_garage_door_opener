@@ -75,6 +75,10 @@ cards:
 - [U8g2: Library for monochrome displays](https://github.com/olikraus/u8g2)
 - [VL53L1X: time-of-flight distance sensor libary](https://github.com/pololu/vl53l1x-arduino)
 
+
+## OTA updates
+The EspMQTTClient includes a function for OTA updates. To access it, simply enter the device's IP address in your browser. Use the `MQTT_USER` and `MQTT_PASSWORD` credentials to log in.
+
 ## License
 
 Distributed under the MIT License.
