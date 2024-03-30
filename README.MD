@@ -33,13 +33,13 @@ mqtt:
   sensor:
       unique_id: garage_door_status
       name: "Garage_door"
-      state_topic: "esp32/VL53L1X/distance_mm"
+      state_topic: "garage_door/VL53L1X/distance_mm"
       unit_of_measurement: "mm"
 
   button:
       unique_id: garage_door_button
       name: "Garage door putton"
-      command_topic: "esp32/garage_door/relay"
+      command_topic: "garage_door/relay"
       payload_press: "pulse"
       qos: 2
       retain: false
@@ -56,13 +56,13 @@ cards:
     type: button
     tap_action:
       action: toggle
-    entity: button.restart_bedroom_switch
+    entity: button.open_garage_door
     icon: mdi:garage
   - type: gauge
     entity: sensor.garage_door
     unit: mm
-    min: 180
-    max: 2500
+    min: 230
+    max: 2580
     needle: true
 ```
 
