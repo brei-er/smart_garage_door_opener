@@ -69,6 +69,12 @@ cards:
 ![hassio_card](./img/home_assistant_card.png)
 
 
+## Dependencies
+
+- [EspMQTTClient: MQTT and Wifi handling for ESP8266 and ESP32](https://github.com/plapointe6/EspMQTTClient)
+- [U8g2: Library for monochrome displays](https://github.com/olikraus/u8g2)
+- [VL53L1X: time-of-flight distance sensor libary](https://github.com/pololu/vl53l1x-arduino)
+
 ## License
 
 Distributed under the MIT License.
