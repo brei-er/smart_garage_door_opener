@@ -38,7 +38,7 @@ mqtt:
 
   button:
       unique_id: garage_door_button
-      name: "Garage door putton"
+      name: "Garage door button"
       command_topic: "garage_door/relay"
       payload_press: "pulse"
       qos: 2
