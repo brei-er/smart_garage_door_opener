@@ -15,7 +15,8 @@ into your smart home environment using MQTT, specifically tailored for use with 
 unsigned long previous_millis_sensor = 0;
 unsigned long previous_millis_publish = 0;
 int distance_mm = 0;
-unsigned long submitInterval = 1000;
+unsigned long submit_interval = 1000;
+unsigned long state_delay = 0;
 
 // Relay pin
 const int relay = 13; // D7
@@ -27,6 +28,7 @@ VL53L1X sensor;
 unsigned long interval_sensor_readings = 1000;     // ms
 const long interval_publish_end_positions = 10000; // ms
 const long interval_publish_moving = 1000;         // ms
+const long delay_time = 10000;         // ms Additional delay for state changes
 
 // Distance limits for sensor reaging intervals
 float distance_mm_open_positions = 240;    // mm
@@ -66,6 +68,9 @@ void triggerGarageDoorRelay()
   u8g2.drawStr(0, 10, MQTT_SUB_RELAY); // write something to the internal memory
   u8g2.drawStr(0, 25, "trigger");      // write something to the internal memory
   u8g2.sendBuffer();                   // transfer internal memory to the display
+
+  // Modify the state delay to start the shorter publish interval
+  state_delay = millis() + delay_time;
 
   // Trigger the relay
   Serial.println("Trigger_door");
@@ -161,16 +166,24 @@ void loop()
     // Update the submit interval based on the mean distance
     if (distance_mm < distance_mm_open_positions || distance_mm > distance_mm_closed_positions)
     {
-      submitInterval = interval_publish_end_positions; // Longer interval for end positions
+      submit_interval = interval_publish_end_positions; // Longer interval for end positions
+      state_delay = 0;
     }
     else
     {
-      submitInterval = interval_publish_moving; // Shorter interval during moving
+      submit_interval = interval_publish_moving; // Shorter interval during moving
+      state_delay = millis() + delay_time;
+    }
+
+    // Switch to shorter interval if the state has changed
+    if (millis() <= state_delay)
+    {
+      submit_interval = interval_publish_moving;
     }
   }
 
   // Publish sensor readings
-  if (millis() - previous_millis_publish >= submitInterval)
+  if (millis() - previous_millis_publish >= submit_interval)
   {
     previous_millis_publish = millis();
     client.publish(MQTT_PUB_DISTANCE_MM, String(distance_mm).c_str());
